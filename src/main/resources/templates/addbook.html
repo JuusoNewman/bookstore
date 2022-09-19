@@ -1,9 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>new book</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
 <body>
 	<h1>Insert the information of the book</h1>
 	<div>
@@ -28,9 +30,15 @@
 			</div>
 			<div>			
 		  	<label>Price</label>
-			<input type="number" min="1" th:field="*{price}" />			
+			<input type="number" min="1" th:field="*{price}" />	
 			</div>
 			<br>
+			
+			<label for="categorylist">Category</label>
+			<select id="categorylist" th:field="*{category}">
+				<option th:each="category: ${categories}" th:value="${category.categoryid}" th:text="${category.name}"></option>
+			</select>
+			
 			
 			<input type="submit" value="Save"></input>
 		</form>

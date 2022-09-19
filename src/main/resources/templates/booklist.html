@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Main page</title>
 </head>
 <body>
 <table class="table table-striped">
@@ -22,7 +21,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     	<td th:text="${book.isbn}"></td>
     	<td th:text="${book.bookYear}"></td>
     	
-    	<td><a href="@{/delete/{id}(id=${book.id})}"> Delete </a> <a href="@{/edit/{id}(id=${book.id})}"> Edit </a></td>
+    	 <td><a th:href="@{/editBook/{id}(id=${book.id})}">Edit</a></td>
+    	 <td><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
 </tr>
 </table>
  <a href="/addbook" class="btn btn-primary">Add book</a>

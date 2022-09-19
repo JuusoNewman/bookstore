@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -15,34 +14,40 @@ import com.example.Bookstore.domain.*;
 public class BookstoreController {
         @Autowired
         private BookRepository repository;
+        
+        @Autowired
+        private CategoryRepository cRepository;
 
         @RequestMapping(value= {"/", "/booklist"})
         public String bookList(Model model) {
         model.addAttribute("books", repository.findAll());
+        model.addAttribute("categories", cRepository.findAll());
         return "booklist";
         }
         
         @RequestMapping(value= "/delete/{id}", method = RequestMethod.GET)
         public String deleteBook(@PathVariable("id") Long BookId, Model model) {
         	repository.deleteById(BookId);
-        	return "redirect:booklist";
+        	return "redirect:/booklist";
         }
         
         @RequestMapping(value= "/addbook")
         public String addBook(Model model) {
         	model.addAttribute("newBook", new Book());
+        	model.addAttribute("categories", cRepository.findAll());
         	return "addBook";
         }
         
-        @RequestMapping(value= "/editbook/{id}")
+        @RequestMapping(value= "/editBook/{id}", method = RequestMethod.GET)
         public String editBook(@PathVariable("id") Long BookId, Model model) {
         	model.addAttribute("editBook", repository.findById(BookId));
+        	model.addAttribute("categories", cRepository.findAll());
         	return "editBook";
         }
         
-        @PostMapping("saveBook")
+        @RequestMapping(value = "saveBook", method = RequestMethod.POST)
     	public String saveBook(Book book) {
     		repository.save(book);
-    		return "redirect:booklist";
+    		return "redirect:/booklist";
     	}
 }

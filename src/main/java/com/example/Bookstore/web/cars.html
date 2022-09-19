@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>carlist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Cars</h1>
+    <table>
+		<tr>
+		    <th>Brand</th>
+		    <th>Model</th>
+		</tr>  
+    	<tr th:each = "car : ${autot}">
+    		<td th:text="${car.brand}"></td>
+    		<td th:text="${car.model}"></td>
+    		<td><a th:href="@{/editCar/{id}(id=${car.id})}">Muokkaa</a></td>
+ 				
+    	</tr>
+     </table>
+     <a href="/addCar">Add car</a>
+     
+</body>
+</html>
