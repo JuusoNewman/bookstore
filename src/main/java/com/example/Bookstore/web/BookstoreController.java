@@ -17,6 +17,11 @@ public class BookstoreController {
         
         @Autowired
         private CategoryRepository cRepository;
+        
+        @RequestMapping(value="/login")
+        public String login() {	
+            return "login";
+        }	
 
         @RequestMapping(value= {"/", "/booklist"})
         public String bookList(Model model) {
@@ -25,6 +30,7 @@ public class BookstoreController {
         return "booklist";
         }
         
+        @org.springframework.security.access.prepost.PreAuthorize("hasAuthority('ADMIN')")
         @RequestMapping(value= "/delete/{id}", method = RequestMethod.GET)
         public String deleteBook(@PathVariable("id") Long BookId, Model model) {
         	repository.deleteById(BookId);
@@ -37,7 +43,7 @@ public class BookstoreController {
         	model.addAttribute("categories", cRepository.findAll());
         	return "addBook";
         }
-        
+        @org.springframework.security.access.prepost.PreAuthorize("hasAuthority('ADMIN')")
         @RequestMapping(value= "/editBook/{id}", method = RequestMethod.GET)
         public String editBook(@PathVariable("id") Long BookId, Model model) {
         	model.addAttribute("editBook", repository.findById(BookId));

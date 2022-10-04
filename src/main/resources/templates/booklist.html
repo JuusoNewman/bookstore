@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Main page</title>
 </head>
 <body>
+
 <table class="table table-striped">
 <tr>
 	
@@ -21,11 +22,23 @@
     	<td th:text="${book.isbn}"></td>
     	<td th:text="${book.bookYear}"></td>
     	
-    	 <td><a th:href="@{/editBook/{id}(id=${book.id})}">Edit</a></td>
-    	 <td><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
+    	 <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/editBook/{id}(id=${book.id})}">Edit</a></td>
+    	 <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
 </tr>
 </table>
- <a href="/addbook" class="btn btn-primary">Add book</a>
+ 
+ <div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/addbook}" method="post">
+			<input type="submit" value="Add book" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>
+ 
+
+<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>
 
 </body>
 </html>
